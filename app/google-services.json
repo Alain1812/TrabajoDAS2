@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "541336758817",
+    "project_id": "trabajodas2",
+    "storage_bucket": "trabajodas2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:541336758817:android:b63510205df9e91ebb1160",
+        "android_client_info": {
+          "package_name": "com.example.trabajodas2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKjKIqYI57PF6xv4tqq0q2SZyZIS6SrxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

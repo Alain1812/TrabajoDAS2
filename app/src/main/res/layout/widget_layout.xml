@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/widget_background"
+    android:padding="12dp"
+    android:gravity="center">
+
+    <!-- Texto con las observaciones de la incidencia -->
+    <TextView
+        android:id="@+id/widgetObservacion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Incidencia"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#212121"
+        android:gravity="center"
+        android:paddingBottom="6dp"
+        android:maxLines="2"
+        android:ellipsize="end"/>
+
+    <!-- Texto con la fecha de creacion de la incidencia -->
+    <TextView
+        android:id="@+id/widgetFecha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fecha"
+        android:textSize="12sp"
+        android:textColor="#666666"
+        android:gravity="center"
+        android:paddingBottom="8dp" />
+
+    <!-- Imagen de la incidencia -->
+    <ImageView
+        android:id="@+id/widgetImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_placeholder"
+        android:background="@drawable/image_rounded"
+        android:contentDescription="Imagen de la incidencia" />
+
+</LinearLayout>
