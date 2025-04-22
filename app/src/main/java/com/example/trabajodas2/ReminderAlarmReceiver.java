@@ -42,5 +42,4 @@ public class ReminderAlarmReceiver extends BroadcastReceiver {
         manager.notify(100, builder.build());
     }
 
-
 }

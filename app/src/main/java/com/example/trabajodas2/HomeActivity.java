@@ -77,6 +77,8 @@ public class HomeActivity extends AppCompatActivity {
     private Location currentLocation;
     private Marker marcadorUbicacion;
     private String observacionesTexto = "";
+    ElReceiver locationReceiver = new ElReceiver();
+    private boolean isReceiverRegistered = false;
     private static final int GALLERY_REQUEST = 2;
     private boolean modoEdicion = false;
     private int reporteIdEnEdicion;
@@ -643,6 +645,35 @@ public class HomeActivity extends AppCompatActivity {
         );
     }
 
+    // Reiniciar ubicacion al aceptar permisos en segundo plano
+    public void reiniciarServiciosUbicacion() {
+        if (fusedLocationClient != null && locationCallback != null) {
+            fusedLocationClient.removeLocationUpdates(locationCallback);
+        }
+
+        startLocationUpdates();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
+            if (location != null) {
+                currentLocation = location;
+                updateMapPosition(new GeoPoint(location.getLatitude(), location.getLongitude()));
+            }
+        });
+
+        iniciarServicioForeground();
+
+        cargarReportesEnMapa();
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -663,6 +694,26 @@ public class HomeActivity extends AppCompatActivity {
         Intent serviceIntent = new Intent(this, ForegroundService.class);
         stopService(serviceIntent);
         map.onDetach();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!isReceiverRegistered) {
+            IntentFilter filter = new IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION);
+            registerReceiver(locationReceiver, filter);
+            isReceiverRegistered = true;
+        }
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (isReceiverRegistered) {
+            unregisterReceiver(locationReceiver);
+            isReceiverRegistered = false;
+        }
     }
 
 }
